@@ -11,9 +11,18 @@
 
 ## 斜体
 
-示例`*斜体*`
+使用`*斜体*`
 
-## 代码块种类
+## Markdown支持的代码块类型
+
+AppleScript, ActionScript 3.0, Shell, ColdFusion, C, C#, CSS, Delphi, diff&patch, Erlang, Groovy, Java, JavaFX, JavaScript, Perl, PHP, text, Python, Ruby, SASS&SCSS, Scala, SQL, Visual Basic, XML, Objective C, F#, R, matlab, swift, GO, 
+
+## 导入文件内容
+
+### 导入md文件
+使用`{% include "./complex_field_desc.md" %}`
+### 导入其它文件
+使用`[import]``(../code/example.json)`
 
 ## 创建表格
 
