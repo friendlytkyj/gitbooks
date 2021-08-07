@@ -1,8 +1,8 @@
 @[TOC](目录)
 
-# Spring Boot怎么实现配置多个Mongodb数据源
+# Spring Boot怎么实现配置多个RabbitMQ
 
-> 本文需要读者对Spring Boot整合Mongodb有基本了解
+> 本文需要读者对Spring Boot整合RabbitMQ有基本了解
 
 ## 环境介绍
 
@@ -10,9 +10,10 @@
 |:--|:--|
 |Spring Boot|2.5.3|
 |Maven|3.6.3|
-|MongoDB |4.2.5|
+|RabbitMQ Server|3.9.1|
+|erlang|24.0.5|
 
-## 配置单个Mongodb数据源
+## 配置单个RabbitMQ
 
 在`application.properties`配置文件中增加如下配置
 
