@@ -1,12 +1,8 @@
+@[TOC](目录)
+
 # Spring Boot怎么实现配置多个Mongodb数据源
 
 > 本文需要读者对Spring Boot整合Mongodb有基本了解
-
-# 目录
-
-- [环境介绍](#环境介绍)
-- [配置单个Mongodb数据源](#配置单个Mongodb数据源)
-- [配置多个MongoDB数据源](#配置多个MongoDB数据源)
 
 ## 环境介绍
 
@@ -44,6 +40,63 @@ private @Autowired MongoTemplate mongoTemplate;
 spring.data.mongodb.xxx1.uri: mongodb://localhost:27017/Teach1
 spring.data.mongodb.xxx2.uri: mongodb://localhost:27017/Teach2
 ```
+
+### 如何创建自定义MongoTemplate对象
+
+想要实现自定义多个数据源，就需要做到像**Spring Boot**框架那样构造一个`MongoTemplate`对象，接下来我们跟踪源码学习如何自己手工创建`MongoTemplate`
+
+#### 查看MongoTemplate.java源码
+
+进入`MongoTemplate.java`源代码，查看构造函数
+
+```
+public MongoTemplate(MongoClient mongoClient, String databaseName)
+
+public MongoTemplate(MongoDatabaseFactory mongoDbFactory)
+
+public MongoTemplate(MongoDatabaseFactory mongoDbFactory, @Nullable MongoConverter mongoConverter)
+```
+
+一共有三个可用的构造函数，从构造函数可以看出，如果想构造一个`MongoTemplate`对象，就需要先创建一个`MongoClient`对象或者`MongoDatabaseFactory`对象
+
+#### 追踪MongoClient对象如何创建
+
+在`MongoTemplate.java`中可以看到**SimpleMongoClientDatabaseFactory**这个对象的创建，创建这个对象需要传入一个MongoClient对象，利用IDE工具查看**SimpleMongoClientDatabaseFactory**构造函数调用的地方
+
+![调用SimpleMongoClientDatabaseFactory构造函数的地方](https://img-blog.csdnimg.cn/d4235d63a7234277b5dfa62df22c0493.png#pic_center "调用SimpleMongoClientDatabaseFactory构造函数的地方")
+
+进入`mongoDbFactory()`
+
+```
+	@Bean
+	public MongoDatabaseFactory mongoDbFactory() {
+		return new SimpleMongoClientDatabaseFactory(mongoClient(), getDatabaseName());
+	}
+```
+
+再跟踪进入`mongoClient()`
+
+```
+	public MongoClient mongoClient() {
+		return createMongoClient(mongoClientSettings());
+	}
+```
+
+再跟踪进入`createMongoClient()`
+
+```
+	protected MongoClient createMongoClient(MongoClientSettings settings) {
+		return MongoClients.create(settings, SpringDataMongoDB.driverInformation());
+	}
+```
+
+从这里可以看到，原来有一个工具类`MongoClients`帮助创建`MongoClient`对象，这个时候我们进一步查看这个工具类其它`create`方法
+
+![MongoClients.create](https://img-blog.csdnimg.cn/a07e54d24f65402cbba0288a5d2bff8e.png#pic_center "MongoClients.create")
+
+其中有一个最简单的工具方法，`String`类型的`connectionString`参数,这个`connectionString`其实就是连接**MongoDB**的**URI**
+
+> 源码看到这里，我们可以知道，如果要创建`MongoTemplate`对象，无论是传`MongoClient`还是`MongoDatabaseFactory`对象，最终都是需要一个`connectionString`，也就是**uri**配置，那我们接下来就可以读取配置并自己构造`MongoTemplate`对象了。
 
 ### 读取自定义数据源配置项
 

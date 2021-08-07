@@ -1,3 +1,5 @@
+@[TOC](目录)
+
 # Spring Boot整合Junit 5
 
 > 要求读者对**Spring Boot**有基本的了解，本文不再对**Spring Boot**做基本介绍。
@@ -114,6 +116,25 @@ public class AnnotationTest extends AbstractSpringbootTestBase {
 
 ![@DisplayName注解使用效果图](https://img-blog.csdnimg.cn/82c822b17e2d4fff9dbce30e68de4b1a.png#pic_left "@DisplayName注解使用效果图")
 
+### @TestPropertySource
 
+单元测试中，经常需要对不同的用例设置不同的参数，可以使用这个注解帮助我们为每个单元测试类配置不同的变量
 
+```
+@TestPropertySource(properties = {
+		"spring.data.mongodb.uri: mongodb://localhost:27017/Teach1"
+})
+```
+```
+@TestPropertySource(properties = {
+		"spring.data.mongodb.uri: mongodb://localhost:27017/Teach2"
+})
+```
 
+### @Autowired
+
+自动装载**Bean**
+
+### @Qualifier
+
+与**@Autowired**配合一起使用，可以指定使用具体哪个**Bean**
