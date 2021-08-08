@@ -13,6 +13,10 @@
 |RabbitMQ Server|3.9.1|
 |erlang|24.0.5|
 
+## 疑问
+
+- 以@Bean的方式创建队列，如何在指定的MQ创建，Spring Boot是在什么时候创建队列，是使用默认的ConnectionFactory创建队列吗？
+
 ## 配置单个RabbitMQ
 
 在`application.properties`配置文件中增加如下配置
