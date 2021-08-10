@@ -338,6 +338,16 @@ createConnectionFactory方法的代码如下
 	}
 ```
 
+### 编写Junit单元测试
+
+
+
+### 报错
+
+```
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'rabbitListenerContainerFactory' defined in class path resource [org/springframework/boot/autoconfigure/amqp/RabbitAnnotationDrivenConfiguration.class]: Unsatisfied dependency expressed through method 'simpleRabbitListenerContainerFactory' parameter 1; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.amqp.rabbit.connection.ConnectionFactory' available: expected single matching bean but found 2: defaultConnectionFactory,secondConnectionFactory
+```
+
 ## 消费者两种实现方式
 
 ### 注解方式实现消费者
