@@ -13,19 +13,6 @@
 |RabbitMQ Server|3.9.1|
 |erlang|24.0.5|
 
-## 疑问
-
-- 以@Bean的方式创建队列，如何在指定的MQ创建，Spring Boot是在什么时候创建队列，是使用默认的ConnectionFactory创建队列吗？
-- 如何对不同的MQ创建各自不同的队列？
-> org.springframework.amqp.rabbit.connection.ChannelListener
-  在这个接口中实现队列的创建
-- rabbitmq创建动态队列并订阅消费
-业务场景: 程序启动后，根据业务规则动态生成队列名称，可能每次启动后生成的队列名称不相同
-- 如何消费这个队列？
-- @RabbitHandler注解定义的方法，参数如何声明？
-> 方法参数，必须要有一个跟实际放入MQ的参数类型一致，比如放到MQ的是String类型的数据，那么就要有一个String类型的参数
-- AmqpAdmin队列过滤规则
-
 ## 配置单个RabbitMQ
 
 ### 先来一个最最简单的示例
@@ -145,7 +132,7 @@ buildMessage()代码
     - com.rabbitmq.client.Channel
 - 为了方便写`Junit`测试，加了一个`List`存放消费结果
 
-```
+```Java
 @Component
 @RabbitListener(queues = "mq-queue-1", ackMode = SpringRabbitConsumer.ACK_MODE)
 @Slf4j
@@ -184,9 +171,21 @@ public class SpringRabbitConsumer {
 
 ### 编写Junit单元测试
 
-使用`RabbitTemplate`发布消息到**RabbitMQ**，然后消费者从**RabbitMQ**取出消息进行业务逻辑处理，我们简单的把取出来的消息放下一个`List`
+**Junit**测试类上面增加配置属性
 
 ```
+@TestPropertySource(properties = {
+		""
+		,"spring.rabbitmq.host: 127.0.0.1"
+		,"spring.rabbitmq.port: 5672"
+		,"spring.rabbitmq.username: guest"
+		,"spring.rabbitmq.password: guest"
+})
+```
+
+使用`RabbitTemplate`发布消息到**RabbitMQ**，然后消费者从**RabbitMQ**取出消息进行业务逻辑处理，我们简单的把取出来的消息放下一个`List`
+
+```Java
 	@Test
 	public void test() throws Exception {
 		String exchange = "mq-exchange-1";
@@ -207,6 +206,8 @@ public class SpringRabbitConsumer {
 		log.debug("测试通过");
 	}
 ```
+
+### 小结
 
 以上就是**Spring Boot**整合**RabbitMQ**最简单的一个例子，**Spring Boot**已经帮我们做了很多事情，我们只需要做很少的配置，使用注解很快就可以完成对**RabbitMQ**的发布以及订阅。
 
@@ -251,7 +252,7 @@ spring.rabbitmq.second.password: guest
 
 ### 读取second配置
 
-```
+```Java
 @Configuration
 @ConfigurationProperties(prefix = "spring.rabbitmq")
 public class RabbitmqConfiguration {
@@ -273,7 +274,7 @@ public class RabbitmqConfiguration {
 
 根据`mqQueue1`的创建方式，再创建一个`mqQueue2`
 
-```
+```Java
 	@Bean
 	public Queue mqQueue2() {
 		String queueName = "mq-queue-2";
@@ -297,7 +298,7 @@ public class RabbitmqConfiguration {
 
 ### 创建ConnectionFactory
 
-```
+```Java
 	@Bean
     public ConnectionFactory connectionFactory() {
         return createConnectionFactory(defaultRabbitProperties);
@@ -311,7 +312,7 @@ public class RabbitmqConfiguration {
 
 createConnectionFactory方法的代码如下
 
-```
+```Java
 	private ConnectionFactory createConnectionFactory(RabbitProperties properties){
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setHost(properties.getHost());
@@ -324,7 +325,7 @@ createConnectionFactory方法的代码如下
 
 ### 创建RabbitTemplate
 
-```
+```Java
 	@Bean
 	public RabbitTemplate defaultRabbitTemplate(@Qualifier("connectionFactory") ConnectionFactory connectionFactory) {
 		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -340,22 +341,166 @@ createConnectionFactory方法的代码如下
 
 ### 编写Junit单元测试
 
+**Junit**测试类上面增加配置属性
 
+```Java
+@TestPropertySource(properties = {
+		""
+		,"spring.rabbitmq.host: 127.0.0.1"
+		,"spring.rabbitmq.port: 5672"
+		,"spring.rabbitmq.username: guest"
+		,"spring.rabbitmq.password: guest"
+		
+		,"spring.rabbitmq.second.host: 127.0.0.1"
+		,"spring.rabbitmq.second.port: 5672"
+		,"spring.rabbitmq.second.username: guest"
+		,"spring.rabbitmq.second.password: guest"
+})
+```
 
-### 报错
+在测试类中引用创建的**Bean**
+
+```Java
+	@Qualifier("defaultRabbitTemplate")
+	private @Autowired RabbitTemplate rabbitTemplate;
+	
+	@Qualifier("secondRabbitTemplate")
+	private @Autowired RabbitTemplate rabbitTemplateSecond;
+	
+	@Qualifier("springRabbitConsumer")
+	private @Autowired SpringRabbitConsumer springRabbitConsumer;
+	
+	@Qualifier("springRabbitConsumerSecond")
+	private @Autowired SpringRabbitConsumer springRabbitConsumerSecond;
+```
+
+开始写测试代码
+
+```Java
+	@Test
+	public void test() throws Exception {
+		String exchange = "mq-exchange-1";
+		// 构造一条业务数据
+		MqMessage mqMessage = buildMessage();
+		// 发布业务数据到RabbitMQ
+		rabbitTemplate.convertAndSend(exchange, "", jsonUtil.toJson(mqMessage));
+		// sleep一下，等消费者消费数据
+		ThreadUtils.sleep(DurationUtils.toDuration(500, TimeUnit.MILLISECONDS));
+		// 从消费者获取消费结果
+		List<MqMessage> consumerResult = springRabbitConsumer.getMqMessageList();
+		
+		// 校验测试结果
+		assertFalse(consumerResult.isEmpty());
+		MqMessage lastConsume = consumerResult.get(consumerResult.size()-1);
+		assertEquals(mqMessage.getMsgId(), lastConsume.getMsgId());
+		
+		// =================================
+		
+		String exchange2 = "mq-exchange-2";
+		// 构造一条业务数据
+		MqMessage mqMessage2 = buildMessage();
+		// 发布业务数据到RabbitMQ
+		rabbitTemplateSecond.convertAndSend(exchange2, "", jsonUtil.toJson(mqMessage2));
+		// sleep一下，等消费者消费数据
+		ThreadUtils.sleep(DurationUtils.toDuration(500, TimeUnit.MILLISECONDS));
+		// 从消费者获取消费结果
+		List<MqMessage> consumerResult2 = springRabbitConsumerSecond.getMqMessageList();
+		
+		// 校验测试结果
+		assertFalse(consumerResult2.isEmpty());
+		MqMessage lastConsume2 = consumerResult2.get(consumerResult2.size()-1);
+		assertEquals(mqMessage2.getMsgId(), lastConsume2.getMsgId());
+		
+		log.debug("测试通过");
+	}
+```
+
+### RabbitAnnotationDrivenConfiguration介绍
+
+如果直接运行上面的**Junit**单元测试会发现有一个报错
 
 ```
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'rabbitListenerContainerFactory' defined in class path resource [org/springframework/boot/autoconfigure/amqp/RabbitAnnotationDrivenConfiguration.class]: Unsatisfied dependency expressed through method 'simpleRabbitListenerContainerFactory' parameter 1; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.amqp.rabbit.connection.ConnectionFactory' available: expected single matching bean but found 2: defaultConnectionFactory,secondConnectionFactory
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'rabbitListenerContainerFactory' defined in class path resource [org/springframework/boot/autoconfigure/amqp/RabbitAnnotationDrivenConfiguration.class]: Unsatisfied dependency expressed through method 'simpleRabbitListenerContainerFactory' parameter 1; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.amqp.rabbit.connection.ConnectionFactory' available: expected single matching bean but found 2: defaultConnectionFactory,secondConnectionFactory  
 ```
 
-## 消费者两种实现方式
+我们根据报错信息看看`RabbitAnnotationDrivenConfiguration`这个类的源码，其中有一段创建**Bean**的代码如下
 
-### 注解方式实现消费者
-@RabbitListener+@RabbitHandler
+```Java
+	@Bean(name = "rabbitListenerContainerFactory")
+	@ConditionalOnMissingBean(name = "rabbitListenerContainerFactory")
+	@ConditionalOnProperty(prefix = "spring.rabbitmq.listener", name = "type", havingValue = "simple",
+			matchIfMissing = true)
+	SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
+			SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		configurer.configure(factory, connectionFactory);
+		return factory;
+	}
+```
 
-### Container方式实现消费者
+这段代码的意思是如果没有创建**SimpleRabbitListenerContainerFactory**这个**Bean**，并且**Bean**的名字为`rabbitListenerContainerFactory`这个的话，那么就会创建一个名字为`rabbitListenerContainerFactory`的**Bean**，在创建的时候会依赖一个**ConnectionFactory**的**Bean**，但我们定义了两个**ConnectionFactory**，一个叫`defaultConnectionFactory`，一个叫`secondConnectionFactory`，所以报错了。
 
-#### ChannelAwareMessageListener介绍
+要解决这个问题，就回到`RabbitmqConfiguration`配置类，添加如下代码
 
+```
+	@Bean(name = "rabbitListenerContainerFactory")
+	SimpleRabbitListenerContainerFactory defaultRabbitListenerContainerFactory(
+			SimpleRabbitListenerContainerFactoryConfigurer configurer,
+			@Qualifier("defaultConnectionFactory") ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		configurer.configure(factory, connectionFactory);
+		return factory;
+	}
+	
+	@Bean
+	SimpleRabbitListenerContainerFactory secondRabbitListenerContainerFactory(
+			SimpleRabbitListenerContainerFactoryConfigurer configurer,
+			@Qualifier("secondConnectionFactory") ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+		configurer.configure(factory, connectionFactory);
+		return factory;
+	}
+```
 
-#### SimpleMessageListenerContainer介绍
+这样我们手动创建两个**SimpleRabbitListenerContainerFactory**的**Bean**，并且把`defaultRabbitListenerContainerFactory`的**Bean**名字声明为`rabbitListenerContainerFactory`。这样一来，`RabbitAnnotationDrivenConfiguration`里面就不会再自己去创建`SimpleRabbitListenerContainerFactory`了。
+
+### 小结
+
+以上就是**Spring Boot**整合**RabbitMQ**连接多个**RabbitMQ**的例子，从代码上可以看出，与连接单个**RabbitMQ**相比，需要了解**Spring Boot**关于**RabbitMQ**的更多原理，也需要我们手工创建更多的**Bean**。
+
+**Spring Boot**的**RabbitProperties**类会帮我们读取一个**RabbitMQ**配置，我们自己完成对**second**配置的读取，如果需要连接第3个、第4个甚至更多**RabbitMQ**，只需要模仿**second**示例即可。
+
+## @RabbitListener如何监听指定的RabbitMQ
+
+上面给出连1个**RabbitMQ**的例子和连多个**RabbitMQ**的例子，那么就有细心的朋友发现了，虽然在`SpringRabbitConsumer`类中可以使用`@RabbitListener`注解实现订阅功能，但如果配置了多个**RabbitMQ**，怎么知道订阅的是哪个**RabbitMQ**，可以按自己的意愿指定订阅的**RabbitMQ**吗？
+
+答案是肯定的，我们继续学习`@RabbitListener`这个注解
+
+`@RabbitListener`这个注解有一个属性`containerFactory`，这个属性正好是我们解决前面提到的`UnsatisfiedDependencyException`这个异常而手动创建的两个**Bean**，分别是`rabbitListenerContainerFactory`和`secondRabbitListenerContainerFactory`，这样就把`@RabbitListener`和**RabbitMQ**关联起来了
+
+```
+@Component
+@RabbitListener(queues = "mq-queue-1", ackMode = SpringRabbitConsumer.ACK_MODE, containerFactory = "rabbitListenerContainerFactory")
+@Slf4j
+public class SpringRabbitConsumer {
+
+}
+
+@Component
+@RabbitListener(queues = "mq-queue-2", ackMode = SpringRabbitConsumerSecond.ACK_MODE, containerFactory = "secondRabbitListenerContainerFactory")
+@Slf4j
+public class SpringRabbitConsumerSecond extends SpringRabbitConsumer {
+	
+}
+```
+
+我们通过**RabbitMQ**控制台看看修改后的效果
+
+![RabbitMQ两个不同连接](https://img-blog.csdnimg.cn/bd49839af05449b5a08c86b2ed290fcd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZyaWVuZGx5dGt5ag==,size_16,color_FFFFFF,t_70#pic_center "RabbitMQ两个不同连接")
+
+两个消费者分别由两个不同的`ContainerFactory`管理，`ContainerFactory`对应的就是连接的**RabbitMQ**
+
+## 总结
+
+以上就是在**Srping Boot**框架中使用**RabbitMQ**的多数场景的例子，后面还会写更多关于**RabbitMQ**高级应用，欢迎留言提问，一起交流，一起学习。

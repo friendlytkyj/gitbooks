@@ -1,3 +1,16 @@
+## 疑问
+
+- 以@Bean的方式创建队列，如何在指定的MQ创建，Spring Boot是在什么时候创建队列，是使用默认的ConnectionFactory创建队列吗？
+- 如何对不同的MQ创建各自不同的队列？
+> org.springframework.amqp.rabbit.connection.ChannelListener
+  在这个接口中实现队列的创建
+- rabbitmq创建动态队列并订阅消费
+业务场景: 程序启动后，根据业务规则动态生成队列名称，可能每次启动后生成的队列名称不相同
+- 如何消费这个队列？
+- @RabbitHandler注解定义的方法，参数如何声明？
+> 方法参数，必须要有一个跟实际放入MQ的参数类型一致，比如放到MQ的是String类型的数据，那么就要有一个String类型的参数
+- AmqpAdmin队列过滤规则
+
 ```
 @Bean(name = "rabbitListenerContainerFactory")
 	SimpleRabbitListenerContainerFactory defaultRabbitListenerContainerFactory(
