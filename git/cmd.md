@@ -1,3 +1,19 @@
+# 从远程仓库克隆一份代码
+
+`git clone git@github.com:friendlytkyj/gitbooks.git`
+
+# 从远程仓库更新代码
+
+`git pull`
+
+# 提交代码到本地
+
+`git commit`
+
+# 推送代码到远程仓库
+
+`git push`
+
 # 生成新SSH key
 
 1. 在Git Bash中输入
