@@ -8,9 +8,14 @@
 
 ## 常用插件列表
 
-|插件名称|地址|
-|:---|:---|
-|Markdown|`http://winterwell.com/software/updatesite/`|
+|插件名称|地址|说明|
+|:---|:---|:---|
+|Markdown|`http://winterwell.com/software/updatesite/`|编写和预览Markdown文档|
+|PropertiesEditor|`http://propedit.sourceforge.jp/eclipse/updates/`|可以把unicode字符转换成中文|
+|WebPageEditor|`http://download.eclipse.org/releases/juno`|展开Web, XML, JavaEE and OSGi Enterprise Development; 选中Web Page Editor|
+
+
+
 
 
 
