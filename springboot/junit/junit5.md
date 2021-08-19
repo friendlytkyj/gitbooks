@@ -138,3 +138,14 @@ public class AnnotationTest extends AbstractSpringbootTestBase {
 ### @Qualifier
 
 与**@Autowired**配合一起使用，可以指定使用具体哪个**Bean**
+
+## Suite测试
+
+```
+@RunWith(JUnitPlatform.class)
+@SelectPackages("com.wen3.security")
+public class SuiteTest {
+
+	// 测试类需要以**Test**或**Tests**结尾
+}
+```
