@@ -149,3 +149,15 @@ public class SuiteTest {
 	// 测试类需要以**Test**或**Tests**结尾
 }
 ```
+
+# Mockito使用
+
+## @InjectMocks
+Mockito无法实例化内部类，本地类，抽象类和接口
+```
+@Mock
+private RefundRecordService refundRecordServiceMock;
+@InjectMocks
+private @Autowired MgoAdvertisementService advertisementService;
+```
+
