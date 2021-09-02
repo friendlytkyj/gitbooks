@@ -76,10 +76,18 @@ pause
   - `logs`。数据库运行输出的日志，可以用来分析软件运行情况以及帮助排查问题。
   - `conf`。数据库运行的配置信息。
   
+# 安装JRE
+
+下载地址: `https://download.oracle.com/otn/java/jdk/8u301-b09/d3c52aa6bfa54d3ca74e617f18309292/jre-8u301-windows-x64.exe?AuthParam=1630573665_a614beae97ccd982557f34f5ba667ee3`
+  
 # 安装运行ams软件
 
 - 解压`ams.zip`
 - 进入ams目录
+- 修改`conf/wraggper.conf`，把以下内容的`%JAVA_HOME%`替换成JRE安装目录
+  ```
+  wrapper.java.command=%JAVA_HOME%/bin/java
+  ```
 - 运行`安装window服务.bat`，安装成功后**Windows服务**会多一个**广告管理系统**
 - 运行`启动window服务.bat`
 
