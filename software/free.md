@@ -30,3 +30,9 @@
 |:--|:--|:--|
 |MongoDB Windows版本|`https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2012plus-4.2.15.zip`||
 |MongoDB Linux版本|`https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/4.2/x86_64/RPMS/mongodb-org-server-4.2.15-1.amzn1.x86_64.rpm`||
+
+# 脑图
+|名称|地址|授权|
+|:--|:--|:--|
+|FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
+
