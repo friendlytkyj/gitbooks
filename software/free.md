@@ -36,3 +36,9 @@
 |:--|:--|:--|
 |FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
 
+# UML工具
+
+|名称|地址|授权|
+|:--|:--|:--|
+|Open ModelSphere|`http://www.modelsphere.com/org/`|GPL (GNU Public License)|
+|Modelio|`https://www.modelio.org/downloads/download-modelio.html`|GPL (GNU Public License)|
