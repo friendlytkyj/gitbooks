@@ -36,3 +36,10 @@
 |:--|:--|:--|
 |FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
 
+# MQ
+
+## Kafka
+
+|名称|地址|授权|
+|:--|:--|:--|
+|Kafka|`http://kafka.apache.org/downloads`|`https://www.apache.org/licenses/LICENSE-2.0.html`|
