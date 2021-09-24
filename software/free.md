@@ -24,12 +24,20 @@
 |:--|:--|:--|
 |MarkdownPad|`http://www.markdownpad.com/download.html`|`http://www.markdownpad.com/privacy.html`|
 
-# MongoDB
+# 数据库
+
+## MongoDB
 
 |名称|地址|授权|
 |:--|:--|:--|
 |MongoDB Windows版本|`https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2012plus-4.2.15.zip`||
 |MongoDB Linux版本|`https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/4.2/x86_64/RPMS/mongodb-org-server-4.2.15-1.amzn1.x86_64.rpm`||
+
+## PostgreSQL
+
+|名称|地址|授权|
+|:--|:--|:--|
+|PostgreSQL Windows版本|`https://www.postgresql.org/download/windows/`|`https://www.postgresql.org/about/licence/`|
 
 # 脑图
 |名称|地址|授权|
