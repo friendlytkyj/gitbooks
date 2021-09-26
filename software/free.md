@@ -38,6 +38,7 @@
 |名称|地址|授权|
 |:--|:--|:--|
 |PostgreSQL Windows版本|`https://www.postgresql.org/download/windows/`|`https://www.postgresql.org/about/licence/`|
+|pgAdmin|`https://www.pgadmin.org/download/`|`https://www.pgadmin.org/licence/`|
 
 # 脑图
 |名称|地址|授权|
