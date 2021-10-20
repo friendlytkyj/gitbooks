@@ -40,6 +40,54 @@ slowms=1000
 #副本集名称
 replSet=rs0
 ```
+
+```
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+storage:
+  dbPath: D:\ProgramFiles\MongoDB\Server\4.2\data
+  journal:
+    enabled: true
+#  engine:
+#  mmapv1:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path:  D:\ProgramFiles\MongoDB\Server\4.2\log\mongod.log
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+
+
+#processManagement:
+
+#security:
+
+#operationProfiling:
+
+replication:
+  # replSetName复制集名称
+  replSetName: "rs0"
+
+#sharding:
+
+## Enterprise-Only Options:
+
+#auditLog:
+
+#snmp:
+
+```
+
 - 新建**install_service.bat**，内容如下，需要修改**mongod.cfg**路径为刚才新建的完整路径
 
 ```
