@@ -40,12 +40,17 @@
 |PostgreSQL Windows版本|`https://www.postgresql.org/download/windows/`|`https://www.postgresql.org/about/licence/`|
 |pgAdmin|`https://www.pgadmin.org/download/`|`https://www.pgadmin.org/licence/`|
 
+## Oracle
+
+|名称|地址|授权|
+|:--|:--|:--|
+|Instant Client|`https://www.oracle.com/cn/database/technology/instant-client.html`|`https://www.oracle.com/downloads/licenses/distribution-license.html`|
+
 # 脑图
 |名称|地址|授权|
 |:--|:--|:--|
 |FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
 
-<<<<<<< HEAD
 # MQ
 
 ## Kafka
@@ -53,11 +58,10 @@
 |名称|地址|授权|
 |:--|:--|:--|
 |Kafka|`http://kafka.apache.org/downloads`|`https://www.apache.org/licenses/LICENSE-2.0.html`|
-=======
+
 # UML工具
 
 |名称|地址|授权|
 |:--|:--|:--|
 |Open ModelSphere|`http://www.modelsphere.com/org/`|GPL (GNU Public License)|
 |Modelio|`https://www.modelio.org/downloads/download-modelio.html`|GPL (GNU Public License)|
->>>>>>> 25fec92c0fa11355376dcfb751c48c5935fa2397
