@@ -21,7 +21,7 @@
 # Markdown
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |MarkdownPad|`http://www.markdownpad.com/download.html`|`http://www.markdownpad.com/privacy.html`|
 
 # 数据库
@@ -29,26 +29,26 @@
 ## MongoDB
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |MongoDB Windows版本|`https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2012plus-4.2.15.zip`||
 |MongoDB Linux版本|`https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/4.2/x86_64/RPMS/mongodb-org-server-4.2.15-1.amzn1.x86_64.rpm`||
 
 ## PostgreSQL
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |PostgreSQL Windows版本|`https://www.postgresql.org/download/windows/`|`https://www.postgresql.org/about/licence/`|
 |pgAdmin|`https://www.pgadmin.org/download/`|`https://www.pgadmin.org/licence/`|
 
 ## Oracle
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |Instant Client|`https://www.oracle.com/cn/database/technology/instant-client.html`|`https://www.oracle.com/downloads/licenses/distribution-license.html`|
 
 # 脑图
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
 
 # MQ
@@ -56,12 +56,27 @@
 ## Kafka
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |Kafka|`http://kafka.apache.org/downloads`|`https://www.apache.org/licenses/LICENSE-2.0.html`|
 
 # UML工具
 
 |名称|地址|授权|
-|:--|:--|:--|
+|:---|:---|:---|
 |Open ModelSphere|`http://www.modelsphere.com/org/`|GPL (GNU Public License)|
 |Modelio|`https://www.modelio.org/downloads/download-modelio.html`|GPL (GNU Public License)|
+
+# IDE
+
+##　Eclipse
+
+|名称|地址|授权|
+|:---|:---|:---|
+|Eclipse|`https://www.eclipse.org/downloads/packages/`|`https://www.eclipse.org/legal/privacy.php`|
+
+## IntelliJ IDEA Community
+
+|名称|地址|授权|
+|:---|:---|:---|
+|Eclipse|`https://www.jetbrains.com/idea/download/#section=windows`|`Community Edition is free to use for personal and commercial development. The IDE and most of it bundled plugins are open-source, licensed under Apache 2.0.`|
+
