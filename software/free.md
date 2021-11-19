@@ -42,9 +42,51 @@
 
 ## Oracle
 
+下载客户端需要注意
+
+- 下载`Instant Client`，最新版不支持win7，如果是win7需要选择适合的版本`18.5.0.0.0`
+- 下载页面最下方有`Instant Client`的安装说明
+- 解压下载的压缩包，比如：`D:\ProgramFiles\instantclient_18_5`
+- 把这个目录添加到环境变量`PATH`中
+- `Instant Client`不同版本依赖不同版本的`VC++ Redistributable`，需要下载正确的`VC++ Redistributable`版本
+- 添加Oracle配置文件目录，比如：`D:\ProgramFiles\instantclient_18_5\network\admin`
+- 可以使用环境变量`TNS_ADMIN`指定`\network\admin`这个目录的路径
+- 下载`PL/SQL Developer`
+- 修改`tnsnames.ora`
+
+  ```
+    // OTD开发/测试环境
+    OTD-test =
+    (description =
+    (address = (protocol = tcp)(host = 139.224.234.170)(port = 1521))
+    (connect_data = (sid = orcl)(SERVICE_NAME = orcl))
+    )
+    
+    // OTD生产环境
+    OTD-production =
+    (description =
+    (address = (protocol = tcp)(host = 172.19.201.134)(port = 1521))
+    (connect_data = (sid = ORCLPDB1)(SERVICE_NAME = ORCLPDB1))
+    )
+  ```
+
 |名称|地址|授权|
 |:---|:---|:---|
 |Instant Client|`https://www.oracle.com/cn/database/technology/instant-client.html`|`https://www.oracle.com/downloads/licenses/distribution-license.html`|
+|支持的操作系统版本|`https://docs.oracle.com/en/database/oracle/oracle-database/19/ntcli/operating-system-checklist-for-oracle-database-client-installation-on-microsoft-windows.html#GUID-DB33F444-969C-48EC-A6CC-83E938499DCB`||
+|Microsoft Visual C++ Redistributable|`https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170`||
+
+### PL/SQL Developer
+|名称|地址|授权|
+|:---|:---|:---|
+|PL/SQL Developer|`https://www.allroundautomations.com/try-it-free/`||
+
+### 注册/激活码
+
+- PL/SQL 14
+    - product code: ke4tv8t5jtxz493kl8s2nn3t6xgngcmgf3
+    - serial Number: 264452
+    - password: xs374ca
 
 # 脑图
 |名称|地址|授权|
@@ -79,4 +121,3 @@
 |名称|地址|授权|
 |:---|:---|:---|
 |Eclipse|`https://www.jetbrains.com/idea/download/#section=windows`|`Community Edition is free to use for personal and commercial development. The IDE and most of it bundled plugins are open-source, licensed under Apache 2.0.`|
-
