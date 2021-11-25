@@ -121,3 +121,9 @@
 |名称|地址|授权|
 |:---|:---|:---|
 |Eclipse|`https://www.jetbrains.com/idea/download/#section=windows`|`Community Edition is free to use for personal and commercial development. The IDE and most of it bundled plugins are open-source, licensed under Apache 2.0.`|
+
+# nginx
+
+|名称|地址|授权|
+|:---|:---|:---|
+|nginx|`http://nginx.org/en/download.html`||
