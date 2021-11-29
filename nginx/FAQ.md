@@ -1,6 +1,6 @@
 # 启动
 
-`D:\ProgramFiles\nginx-1.21.4>start nginx.exe
+`D:\ProgramFiles\nginx-1.21.4>start nginx.exe`
 
 # 重载
 
