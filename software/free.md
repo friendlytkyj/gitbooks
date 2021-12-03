@@ -107,6 +107,7 @@
 |:---|:---|:---|
 |Open ModelSphere|`http://www.modelsphere.com/org/`|GPL (GNU Public License)|
 |Modelio|`https://www.modelio.org/downloads/download-modelio.html`|GPL (GNU Public License)|
+|Enterprise Architect|`https://sparxsystems.cn/products/ea/trial/request.php`|Not Free|
 
 # IDE
 
