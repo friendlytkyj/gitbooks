@@ -88,6 +88,19 @@
     - serial Number: 264452
     - password: xs374ca
 
+## h2database
+
+|名称|地址|授权|
+|:---|:---|:---|
+|h2database|`http://www.h2database.com/html/download.html`|`http://www.h2database.com/html/license.html`|
+
+### h2快速入门
+
+- 直接解压后下载的文件
+- 修改`h2.bat`, `@java -cp "h2-1.4.200.jar;%H2DRIVERS%;%CLASSPATH%" org.h2.tools.Console %*`
+- 在解压后的目录里面新建一个`data`目录，在data目录下新建一个`test.mv.db`文件
+- jdbc url: `jdbc:h2:tcp://localhost/D:/ProgramFiles/h2database/data/test`
+
 # 脑图
 |名称|地址|授权|
 |:---|:---|:---|
