@@ -103,9 +103,18 @@
 - jdbc url: `jdbc:h2:tcp://localhost/D:/ProgramFiles/h2database/data/test`
 
 # 脑图
+
+## FreeMind
+
 |名称|地址|授权|
 |:---|:---|:---|
 |FreeMind|`https://sourceforge.net/projects/freemind/`|GNU General Public License version 2.0 (GPLv2)|
+
+## MindManager
+
+|名称|地址|授权|
+|:---|:---|:---|
+|MindManager|`https://www.mindmanager.cn/xiazai.html`||
 
 # MQ
 
