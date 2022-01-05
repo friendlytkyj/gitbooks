@@ -1,6 +1,6 @@
 # Kong网关中重要的几个概念介绍
 
-![Kong重要概念关系图](./assets/Kong重要概念关系图.png#pic_center "Kong重要概念关系图")
+![Kong重要概念关系图](https://img-blog.csdnimg.cn/3f4577a8b024492a8985094ee2ec22a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSq56m655y8552b,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center "Kong重要概念关系图")
 
 上图就是kong网关的调用过程，一共分为五部分：用户客户端、routes、services、upstream、target服务端。
 
