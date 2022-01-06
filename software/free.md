@@ -151,3 +151,9 @@
 |名称|地址|授权|
 |:---|:---|:---|
 |nginx|`http://nginx.org/en/download.html`||
+
+# nacos
+
+|名称|地址|授权|
+|:---|:---|:---|
+|nacos|`https://github.com/alibaba/nacos/releases`||
